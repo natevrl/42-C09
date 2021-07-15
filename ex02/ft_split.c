@@ -6,7 +6,7 @@
 /*   By: nbenhado <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 19:10:05 by nbenhado          #+#    #+#             */
-/*   Updated: 2021/07/15 22:13:33 by nbenhado         ###   ########.fr       */
+/*   Updated: 2021/07/15 22:52:29 by nbenhado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,18 @@ char	**ft_split(char *str, char *charset)
 	}
 	tab_de_tab[tab[1] + 1] = 0;
 	return (tab_de_tab);
+}
+
+#include <stdio.h>
+int main(int argc, char **argv)
+{
+    (void)argc;
+    char **res = ft_split(argv[1], argv[2]);
+    int i = 0;
+    while (res[i])
+    {
+        printf("t[%d] = %s\n", i, res[i]);
+        i++;
+    }
+    printf("%s",res[i]);
 }
