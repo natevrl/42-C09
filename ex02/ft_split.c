@@ -6,7 +6,7 @@
 /*   By: nbenhado <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 19:10:05 by nbenhado          #+#    #+#             */
-/*   Updated: 2021/07/15 21:51:00 by nbenhado         ###   ########.fr       */
+/*   Updated: 2021/07/15 22:13:33 by nbenhado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	is_in_charset(char c, char *charset)
 	return (0);
 }
 
-char	*ft_split_copy(char *str, int fin, int debut)
+char	*ft_cpy(char *str, int fin, int debut)
 {
 	int		taille;
 	int		i;
@@ -67,49 +67,31 @@ void	init_var(int *i, int *f, int *charset_end)
 	*charset_end = 0;
 }
 
+// tab[0] = i, tab[1] = stack, tab[2] = charset_end, tab[3] = j
 char	**ft_split(char *str, char *charset)
 {
-	int		i;
-	int		j;
-	int		f;
-	int		charset_end;
+	int		tab[4];
 	char	**tab_de_tab;
 
-	init_var(&i, &f, &charset_end);
+	init_var(&tab[0], &tab[1], &tab[2]);
 	tab_de_tab = malloc(100 * sizeof(char *));
 	if (!tab_de_tab)
 		return (NULL);
 	if (is_in_charset(str[0], charset))
-		f = -1;
-	while (str[++i])
+		tab[1] = -1;
+	while (str[++tab[0]])
 	{
-		if (i == ft_strlen(str) - 1)
-			tab_de_tab[f] = ft_split_copy(str, i + 1, charset_end);
-		j = 0;
-		if (is_in_charset(str[i], charset))
+		if (tab[0] == ft_strlen(str) - 1)
+			tab_de_tab[tab[1]] = ft_cpy(str, tab[0] + 1, tab[2]);
+		tab[3] = 0;
+		if (is_in_charset(str[tab[0]], charset))
 		{
-			while (is_in_charset(str[++i], charset))
-				j++;
-			tab_de_tab[f++] = ft_split_copy(str, (i - 1) - j, charset_end);
-			charset_end = i--;
+			while (is_in_charset(str[++tab[0]], charset))
+				tab[3]++;
+			tab_de_tab[tab[1]++] = ft_cpy(str, (tab[0] - 1) - tab[3], tab[2]);
+			tab[2] = tab[0]--;
 		}
 	}
-	tab_de_tab[f + 1] = 0;
+	tab_de_tab[tab[1] + 1] = 0;
 	return (tab_de_tab);
-}
-
-#include <stdlib.h>
-#include <stdio.h>
-
-int main(int argc, char **argv)
-{
-    (void)argc;
-    char **res = ft_split(argv[1], argv[2]);
-    int i = 0;
-    while (res[i])
-    {
-        printf("t[%d] = %s\n", i, res[i]);
-        i++;
-    }
-    printf("%s",res[i]);
 }
