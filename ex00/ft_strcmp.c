@@ -6,7 +6,7 @@
 /*   By: nbenhado <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 23:01:47 by nbenhado          #+#    #+#             */
-/*   Updated: 2021/07/05 16:13:12 by nbenhado         ###   ########.fr       */
+/*   Updated: 2021/07/17 19:21:48 by nbenhado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,5 @@ int	ft_strcmp(char	*s1, char	*s2)
 		else
 			break ;
 	}
-	if (*s1 > *s2)
-		return (1);
-	else if (*s2 == *s1)
-		return (0);
-	else
-		return (-1);
+	return (*s1 - *s2);
 }
